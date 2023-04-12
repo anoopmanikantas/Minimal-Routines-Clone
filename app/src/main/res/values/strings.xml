@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Routines Clone</string>
+    <string name="select_start_date">Select Start Date</string>
+    <string name="select_end_date">Select End Date</string>
+    <string name="actions_title">Actions</string>
+    <string name="actions_description">The selected actions below will be triggered at the specified start time and reversed at the specified end time</string>
+    <string name="add_actions">Add Actions</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="mobile_data">Mobile Data</string>
+    <string name="location">Location</string>
+</resources>
