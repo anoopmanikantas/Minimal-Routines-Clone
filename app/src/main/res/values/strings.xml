@@ -8,4 +8,5 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="mobile_data">Mobile Data</string>
     <string name="location">Location</string>
+    <string name="empty"> </string>
 </resources>

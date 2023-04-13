@@ -1,4 +1,4 @@
-package com.example.routinesclone.src.commonViews
+package com.example.routinesclone.main.commonViews
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -18,22 +18,35 @@ import com.example.routinesclone.utils.dp
 import com.google.android.material.card.MaterialCardView
 import kotlin.properties.Delegates
 
-class ActionsListTile(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
+open class ActionsListTile(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
     MaterialCardView(context, attrs, defStyle) {
 
     var image: Drawable? by Delegates.observable(null) { _, _, image ->
         imageView.setImageDrawable(image)
     }
 
-    var leadingText: String? by Delegates.observable(null) { _, _, text ->
-        textView.text = text
+    var titleText: String? by Delegates.observable(null) { _, _, text ->
+        titleTextView.text = text
     }
 
-    private val imageView by lazy { ImageView(context) }
-    private val textView by lazy { SWTextView(context) }
+    var backgroundColor: SWColors by Delegates.observable(SWColors.primary) { _, _, color ->
+        setCardBackgroundColor(color.value(context))
+    }
 
-    private val constraintLayout: ConstraintLayout by lazy { ConstraintLayout(context) }
-    private val constraintSet: ConstraintSet by lazy { ConstraintSet() }
+    protected val imageView by lazy { ImageView(context) }
+    protected val titleTextView by lazy { SWTextView(context) }
+    protected val subtitleTextView by lazy {
+        SWTextView(
+            context,
+            "",
+            SWFontWeight.REGULAR,
+            SWFont.BODY,
+            SWColors.text_secondary
+        )
+    }
+
+    protected val constraintLayout: ConstraintLayout by lazy { ConstraintLayout(context) }
+    protected val constraintSet: ConstraintSet by lazy { ConstraintSet() }
 
     init {
         radius = 8f.dp(context)
@@ -43,7 +56,6 @@ class ActionsListTile(context: Context, attrs: AttributeSet? = null, defStyle: I
         )
 
         addView(constraintLayout)
-
         constraintSet.clone(constraintLayout)
         setupViews()
         constraintSet.applyTo(constraintLayout)
@@ -53,11 +65,15 @@ class ActionsListTile(context: Context, attrs: AttributeSet? = null, defStyle: I
         setPadding(0, 0, 0, 8.dp(context))
         setCardBackgroundColor(SWColors.primary.value(context))
         setupLeadingImageView()
+        setupTrailingViews()
+    }
+
+    open fun setupTrailingViews() {
         setupTitleView()
     }
 
     private fun setupTitleView() {
-        textView.apply {
+        titleTextView.apply {
             id = generateViewId()
             fontSize = SWFont.HEADING4
             fontWeight = SWFontWeight.REGULAR

@@ -1,18 +1,18 @@
-package com.example.routinesclone.src.homeScreen
+package com.example.routinesclone.main.homeScreen
 
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import com.example.routinesclone.src.actionsScreen.ActionsActivity
-import com.example.routinesclone.src.commonViews.ListViewAdapter.ActionsTileData
-import com.example.routinesclone.src.repository.Repository
+import com.example.routinesclone.main.actionsScreen.ActionsActivity
+import com.example.routinesclone.main.commonViews.ListViewAdapter.ActionsTileData
+import com.example.routinesclone.main.repository.Repository
 import com.example.routinesclone.utils.CompatActivity
 import com.example.routinesclone.utils.Strings
 import java.util.Calendar
 
-enum class State {
+enum class HomeActivityState {
     HOME_SCREEN,
     ON_ADD_ACTION_TAPPED,
     ACTIONS_SCREEN;
@@ -20,36 +20,38 @@ enum class State {
 
 class HomeActivity : CompatActivity(), HomeScreenConstraintLayoutDelegate {
     private val homeScreenConstraintLayout by lazy { HomeScreenConstraintLayout(this) }
-    private val repository by lazy { Repository(this) }
-    private var state: State? = null
+    private val repository by lazy { Repository() }
+    private var state: HomeActivityState? = null
     private var actionsActivityIntent: Intent? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        handleState(State.HOME_SCREEN)
+        appBarTitle = Strings.app_name.value(this)
+        repository.context = this
+        handleState(HomeActivityState.HOME_SCREEN)
     }
 
-    private fun handleState(state: State?) {
+    private fun handleState(state: HomeActivityState?) {
         this.state = state
         when (state) {
-            State.HOME_SCREEN -> {
+            HomeActivityState.HOME_SCREEN -> {
                 homeScreenConstraintLayout.delegate = this
                 homeScreenConstraintLayout.listData =
                     repository.getActions(repository.selectedActions)
                 setContentView(homeScreenConstraintLayout)
             }
-            State.ON_ADD_ACTION_TAPPED -> {
-                actionsActivityIntent = Intent(this, ActionsActivity(repository)::class.java)
+            HomeActivityState.ON_ADD_ACTION_TAPPED -> {
+                actionsActivityIntent = Intent(this, ActionsActivity::class.java)
+                actionsActivityIntent?.putExtra(Repository.RepositoryName, repository)
                 startActivity(actionsActivityIntent)
             }
-            State.ACTIONS_SCREEN -> {}
+            HomeActivityState.ACTIONS_SCREEN -> {}
             else -> throw Exception("Illegal State")
         }
     }
 
-    // HomeScreen Delegate
-
+    //<editor-fold desc="Home Screen Delegate">
     override fun timePickerTapped(context: Context, isStartDate: Boolean) {
         val calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -82,9 +84,10 @@ class HomeActivity : CompatActivity(), HomeScreenConstraintLayoutDelegate {
     override fun onListItemTap(data: ActionsTileData) {
         when (data.title) {
             Strings.add_actions -> {
-                handleState(State.ON_ADD_ACTION_TAPPED)
+                handleState(HomeActivityState.ON_ADD_ACTION_TAPPED)
             }
             else -> throw Exception("Unknown action")
         }
     }
+    //</editor-fold>
 }

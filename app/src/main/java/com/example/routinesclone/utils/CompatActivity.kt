@@ -5,13 +5,17 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.routinesclone.R
+import com.example.routinesclone.sw.SWColors
 import com.example.routinesclone.sw.SWFont
 import com.example.routinesclone.sw.SWFontWeight
-import com.google.android.material.textview.MaterialTextView
+import com.example.routinesclone.sw.SWTextView
+import kotlin.properties.Delegates
 
 open class CompatActivity: AppCompatActivity() {
-    private val appBarTextView by lazy { MaterialTextView(this) }
-
+    private val appBarTextView by lazy { SWTextView(this) }
+    var appBarTitle: String? by Delegates.observable(null) {_, _, newValue ->
+        appBarTextView.text = newValue
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +39,16 @@ open class CompatActivity: AppCompatActivity() {
     }
 
     private fun updateActionBarTitleView() {
-        appBarTextView.text = getString(R.string.app_name)
-        appBarTextView.setTextColor(getColor(R.color.text_primary))
-        appBarTextView.typeface = SWFontWeight.BOLD.value
-        appBarTextView.textSize = SWFont.HEADING1.value
-
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setDisplayShowCustomEnabled(true)
-        supportActionBar?.customView = appBarTextView
+        appBarTextView.apply {
+            textColor = SWColors.text_primary
+            fontSize = SWFont.HEADING1
+            fontWeight = SWFontWeight.BOLD
+        }
+        supportActionBar?.apply {
+            setDisplayShowTitleEnabled(false)
+            setDisplayShowCustomEnabled(true)
+            customView = appBarTextView
+        }
     }
 
     private fun updateStatusBarColor() {
