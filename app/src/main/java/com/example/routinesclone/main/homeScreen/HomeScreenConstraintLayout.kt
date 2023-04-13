@@ -1,4 +1,4 @@
-package com.example.routinesclone.src.homeScreen
+package com.example.routinesclone.main.homeScreen
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -10,8 +10,8 @@ import android.widget.ListView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.example.routinesclone.R
-import com.example.routinesclone.src.commonViews.ActionsListViewAdapter
-import com.example.routinesclone.src.commonViews.ListViewAdapter.ActionsTileData
+import com.example.routinesclone.main.commonViews.ActionsListViewAdapter
+import com.example.routinesclone.main.commonViews.ListViewAdapter.ActionsTileData
 import com.example.routinesclone.sw.SWColors
 import com.example.routinesclone.sw.SWFont
 import com.example.routinesclone.sw.SWFontWeight
@@ -31,6 +31,7 @@ class HomeScreenConstraintLayout(
     attr: AttributeSet? = null,
     defStyle: Int = 0
 ) : ConstraintLayout(context, attr, defStyle) {
+    //<editor-fold desc="Public Variables">
     var delegate: HomeScreenConstraintLayoutDelegate? = null
     var listData: ArrayList<ActionsTileData> by Delegates.observable(
         ArrayList()
@@ -44,7 +45,9 @@ class HomeScreenConstraintLayout(
     var selectedEndTime: String? by Delegates.observable(null) { _, _, newTime ->
         selectedEndTimeTextView.text = newTime
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Views">
     private val selectStartTimeTextView by lazy {
         SWTextView(
             context,
@@ -74,6 +77,7 @@ class HomeScreenConstraintLayout(
         )
     }
     private val actionsListView by lazy { ListView(context) }
+    //</editor-fold>
 
     private val constraintSet: ConstraintSet = ConstraintSet()
 
@@ -88,6 +92,7 @@ class HomeScreenConstraintLayout(
         constraintSet.applyTo(this)
     }
 
+    //<editor-fold desc="Setup Views">
     private fun setupViews() {
         setBackgroundColor(SWColors.dark_background.value(context))
         setupSelectStartTimeTextView()
@@ -366,4 +371,5 @@ class HomeScreenConstraintLayout(
         }
         delegate?.activateActionsSwitchTapped()
     }
+    //</editor-fold>
 }

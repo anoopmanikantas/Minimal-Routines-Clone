@@ -1,10 +1,10 @@
-package com.example.routinesclone.src.commonViews.ListViewAdapter
+package com.example.routinesclone.main.commonViews.ListViewAdapter
 
 import android.graphics.drawable.Drawable
 import com.example.routinesclone.utils.Strings
 
 data class ActionsTileData(
     val title: Strings,
-    val subtitle: String,
+    val subtitle: Strings,
     val leadingImage: Drawable?
     )

@@ -1,5 +1,6 @@
 package com.example.routinesclone.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 
 enum class Strings {
@@ -10,9 +11,11 @@ enum class Strings {
     actions_description,
     add_actions,
     bluetooth,
-    mobileData,
-    location;
+    mobile_data,
+    location,
+    empty;
 
+    @SuppressLint("DiscouragedApi")
     public fun value(context: Context): String {
         val res = context.resources;
         val resId = res.getIdentifier(name, "string", context.packageName)
