@@ -4,6 +4,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.routinesclone.main.actionsScreen.ActionsActivity
 import com.example.routinesclone.main.commonViews.ListViewAdapter.ActionsTileData
@@ -78,7 +79,7 @@ class HomeActivity : CompatActivity(), HomeScreenConstraintLayoutDelegate {
     }
 
     override fun activateActionsSwitchTapped() {
-        TODO("Not yet implemented")
+        Log.d("Switch Tapped", "Switch activated")
     }
 
     override fun onListItemTap(data: ActionsTileData) {

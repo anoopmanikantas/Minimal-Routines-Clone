@@ -7,18 +7,17 @@ import android.view.ViewGroup
 import android.widget.ListView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import com.example.routinesclone.main.actionsScreen.views.BottomSheetContentViewDelegate
+import com.example.routinesclone.main.actionsScreen.views.TriggerBottomSheetDialogFragment
 import com.example.routinesclone.main.commonViews.ActionsListViewAdapter
 import com.example.routinesclone.main.commonViews.ListViewAdapter.ActionsTileData
 import com.example.routinesclone.sw.SWColors
 import com.example.routinesclone.utils.dp
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlin.properties.Delegates
 
 interface ActionsScreenConstraintLayoutDelegate {
-    fun onBluetoothActionTap(context: Context)
-    fun onMobileDataActionTap(context: Context)
-    fun onLocationServicesActionTap(context: Context)
-    fun onListItemTap(data: ActionsTileData)
+    fun onListItemTap(data: ActionsTileData, bottomSheetFragment: BottomSheetDialogFragment)
 }
 
 class ActionsScreenConstraintLayout(
@@ -28,17 +27,20 @@ class ActionsScreenConstraintLayout(
 ) : ConstraintLayout(context, attr, defStyle) {
     //<editor-fold desc="Public Variables">
     var delegate: ActionsScreenConstraintLayoutDelegate? = null
+    var bottomSheetContentViewDelegate: BottomSheetContentViewDelegate? by Delegates.observable(null) {_, _, delegate ->
+        triggerBottomSheetDialogFragment.delegate = delegate
+    }
     var listData: ArrayList<ActionsTileData> by Delegates.observable(
         ArrayList()
     ) { _, _, newValue ->
         actionsListView.adapter =
-            ActionsListViewAdapter(context, newValue, actionsListView.id)
+            ActionsListViewAdapter(context, newValue, actionsListView.id, true)
     }
     //</editor-fold>
 
     //<editor-fold desc="Private Views">
     private val actionsListView by lazy { ListView(context) }
-    private val modalSheet by lazy {BottomSheetDialog(context)}
+    private val triggerBottomSheetDialogFragment by lazy {TriggerBottomSheetDialogFragment()}
     private val constraintSet = ConstraintSet()
     //</editor-fold>
 
@@ -63,10 +65,11 @@ class ActionsScreenConstraintLayout(
     private fun setupActionsListView() {
         actionsListView.apply {
             id = generateViewId()
-            adapter = ActionsListViewAdapter(context, listData, id)
+            val adapter = ActionsListViewAdapter(context, listData, id, true)
+            this.adapter = adapter
             setOnItemClickListener { parent, _, i, _ ->
                 val data = parent.getItemAtPosition(i) as ActionsTileData
-                delegate?.onListItemTap(data)
+                delegate?.onListItemTap(data, triggerBottomSheetDialogFragment)
             }
 
             divider = ColorDrawable(SWColors.dark_background.value(context))

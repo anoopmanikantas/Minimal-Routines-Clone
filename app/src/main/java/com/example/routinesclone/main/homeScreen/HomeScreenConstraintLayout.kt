@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import android.widget.ListView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import com.example.routinesclone.R
 import com.example.routinesclone.main.commonViews.ActionsListViewAdapter
 import com.example.routinesclone.main.commonViews.ListViewAdapter.ActionsTileData
 import com.example.routinesclone.sw.SWColors
 import com.example.routinesclone.sw.SWFont
 import com.example.routinesclone.sw.SWFontWeight
 import com.example.routinesclone.sw.SWTextView
+import com.example.routinesclone.utils.Strings
 import com.example.routinesclone.utils.dp
 import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlin.properties.Delegates
@@ -51,14 +51,14 @@ class HomeScreenConstraintLayout(
     private val selectStartTimeTextView by lazy {
         SWTextView(
             context,
-            context.resources.getText(R.string.select_start_date).toString()
+            Strings.select_start_date.value(context)
         )
     }
 
     private val selectEndTimeTextView by lazy {
         SWTextView(
             context,
-            context.resources.getText(R.string.select_end_date).toString()
+            Strings.select_end_date.value(context)
         )
     }
     private val selectedStartTimeTextView by lazy { SWTextView(context) }
@@ -66,14 +66,14 @@ class HomeScreenConstraintLayout(
     private val actionTitleTextView by lazy {
         SWTextView(
             context,
-            context.resources.getText(R.string.actions_title).toString()
+            Strings.actions_title.value(context)
         )
     }
     private val activateActionsSwitch by lazy { SwitchMaterial(context) }
     private val actionsDescriptionTextView by lazy {
         SWTextView(
             context,
-            resources.getString(R.string.actions_description)
+            Strings.actions_description.value(context)
         )
     }
     private val actionsListView by lazy { ListView(context) }

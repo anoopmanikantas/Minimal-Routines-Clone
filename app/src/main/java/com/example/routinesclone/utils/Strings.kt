@@ -3,6 +3,7 @@ package com.example.routinesclone.utils
 import android.annotation.SuppressLint
 import android.content.Context
 
+@Suppress("EnumEntryName")
 enum class Strings {
     app_name,
     select_start_date,
@@ -13,11 +14,18 @@ enum class Strings {
     bluetooth,
     mobile_data,
     location,
-    empty;
+    empty,
+    on_title,
+    on_description,
+    off_title,
+    off_description,
+    none_title,
+    none_description,
+    trigger;
 
     @SuppressLint("DiscouragedApi")
-    public fun value(context: Context): String {
-        val res = context.resources;
+    fun value(context: Context): String {
+        val res = context.resources
         val resId = res.getIdentifier(name, "string", context.packageName)
         return if (resId != 0) {
             res.getString(resId)
