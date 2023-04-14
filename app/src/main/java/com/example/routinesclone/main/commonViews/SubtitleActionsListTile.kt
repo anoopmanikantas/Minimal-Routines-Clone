@@ -28,6 +28,7 @@ class SubtitleActionsListTile(
         titleTextView.apply {
             id = generateViewId()
             fontSize = SWFont.HEADING4
+            text = "anoop"
             fontWeight = SWFontWeight.MEDIUM
             textAlignment = View.TEXT_ALIGNMENT_VIEW_START
             constraintLayout.addView(this)
@@ -56,11 +57,11 @@ class SubtitleActionsListTile(
         subtitleTextView.apply {
             id = generateViewId()
             fontSize = SWFont.BODY
+            text = "anoop"
             fontWeight = SWFontWeight.REGULAR
             textAlignment = View.TEXT_ALIGNMENT_VIEW_START
             constraintLayout.addView(this)
             constraintSet.apply {
-                constrainWidth(id, ConstraintSet.WRAP_CONTENT)
                 constrainHeight(id, ConstraintSet.WRAP_CONTENT)
                 connect(
                     id,
@@ -75,6 +76,13 @@ class SubtitleActionsListTile(
                     ConstraintSet.PARENT_ID,
                     ConstraintSet.BOTTOM,
                     14.dp(context)
+                )
+                connect(
+                    id,
+                    ConstraintSet.END,
+                    ConstraintSet.PARENT_ID,
+                    ConstraintSet.END,
+                    16.dp(context)
                 )
             }
         }

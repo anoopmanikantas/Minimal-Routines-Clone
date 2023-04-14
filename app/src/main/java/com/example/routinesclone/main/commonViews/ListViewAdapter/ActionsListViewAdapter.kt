@@ -1,6 +1,7 @@
 package com.example.routinesclone.main.commonViews
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -9,25 +10,33 @@ import com.example.routinesclone.main.commonViews.ListViewAdapter.ActionsTileDat
 class ActionsListViewAdapter(
     private val context: Context,
     private val arrayList: ArrayList<ActionsTileData>,
-    listViewId: Int
+    listViewId: Int,
+    private val isSubtitleListTile: Boolean = false
 ) : ArrayAdapter<ActionsTileData>(context, listViewId, arrayList) {
-    var isSubtitleListTile: Boolean = false
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val listTile: ActionsListTile
         if (isSubtitleListTile) {
-            listTile = SubtitleActionsListTile(context)
+            val listTile = SubtitleActionsListTile(context)
+            listTile.id = View.generateViewId()
+            listTile.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            listTile.image = arrayList[position].leadingImage
+            listTile.titleText = arrayList[position].title.value(context)
             listTile.subtitleText = arrayList[position].subtitle.value(context)
+            Log.d("List Tile Log", "${listTile.subtitleText}")
+            return listTile
         } else {
-            listTile = ActionsListTile(context)
+            val listTile = ActionsListTile(context)
+            listTile.id = View.generateViewId()
+            listTile.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            listTile.image = arrayList[position].leadingImage
+            listTile.titleText = arrayList[position].title.value(context)
+            return listTile
         }
-        listTile.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
-        listTile.id = View.generateViewId()
-        listTile.image = arrayList[position].leadingImage
-        listTile.titleText = arrayList[position].title.value(context)
-        return if (isSubtitleListTile) (listTile as SubtitleActionsListTile) else listTile
     }
 }

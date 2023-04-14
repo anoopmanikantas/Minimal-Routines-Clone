@@ -2,6 +2,7 @@ package com.example.routinesclone.sw
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import com.google.android.material.textview.MaterialTextView
 import kotlin.properties.Delegates
 
@@ -35,5 +36,6 @@ class SWTextView(
         textSize = fontSize.value
         setTextColor(textColor.value(context))
         typeface = fontWeight.value
+        textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }
 }

@@ -5,6 +5,6 @@ import com.example.routinesclone.utils.Strings
 
 data class ActionsTileData(
     val title: Strings,
-    val subtitle: Strings,
+    var subtitle: Strings,
     val leadingImage: Drawable?
     )

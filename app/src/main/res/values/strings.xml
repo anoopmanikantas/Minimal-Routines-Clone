@@ -9,4 +9,11 @@
     <string name="mobile_data">Mobile Data</string>
     <string name="location">Location</string>
     <string name="empty"> </string>
+    <string name="on_title">On</string>
+    <string name="off_title">Off</string>
+    <string name="none_title">None</string>
+    <string name="on_description">This will turn on at the start of the specified time and be reversed at the end of it</string>
+    <string name="off_description">This will turn off at the start of the specified time and be reversed at the end of it</string>
+    <string name="none_description">No trigger selected</string>
+    <string name="trigger">Trigger</string>
 </resources>

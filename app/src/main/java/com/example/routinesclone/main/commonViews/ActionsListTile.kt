@@ -8,8 +8,6 @@ import android.view.View
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.content.res.ResourcesCompat
-import com.example.routinesclone.R
 import com.example.routinesclone.sw.SWColors
 import com.example.routinesclone.sw.SWFont
 import com.example.routinesclone.sw.SWFontWeight
@@ -80,7 +78,6 @@ open class ActionsListTile(context: Context, attrs: AttributeSet? = null, defSty
             textAlignment = View.TEXT_ALIGNMENT_VIEW_START
             constraintLayout.addView(this)
             constraintSet.apply {
-                constrainWidth(id, ConstraintSet.WRAP_CONTENT)
                 constrainHeight(id, ConstraintSet.WRAP_CONTENT)
                 connect(
                     id,
@@ -103,6 +100,13 @@ open class ActionsListTile(context: Context, attrs: AttributeSet? = null, defSty
                     ConstraintSet.BOTTOM,
                     16.dp(context)
                 )
+                connect(
+                    id,
+                    ConstraintSet.END,
+                    ConstraintSet.PARENT_ID,
+                    ConstraintSet.END,
+                    16.dp(context)
+                )
             }
         }
 
@@ -111,7 +115,6 @@ open class ActionsListTile(context: Context, attrs: AttributeSet? = null, defSty
     private fun setupLeadingImageView() {
         imageView.apply {
             id = generateViewId()
-            image = ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher_foreground, null)
             imageTintList = ColorStateList.valueOf(SWColors.text_primary.value(context))
         }
         constraintLayout.addView(imageView)
